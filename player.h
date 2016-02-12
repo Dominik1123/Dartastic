@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,17 +35,28 @@ private:
     int id;
     QString name;
     QList<Set*> sets;
+    int nLegWinsForCurrentSet;
+    int nSetWins;
 
 public:
     explicit Player(int id, QString name, QObject* parent = 0);
 
+    int getId();
+    QString getName();
     double averageLeg();
+    double averageSet();
+    double averageMatch();
     Move* getCurrentMove();
     int getNMoves();
     int getScore();
     void newSet();
+    int getNLegWinsForCurrentSet();
+    int getNSetWins();
+    Move* takeLastMove();
 
 public slots:
+    void legWin(Player* player);
+    void setWin(Player* player);
 };
 
 #endif // PLAYER_H

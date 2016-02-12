@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #define MAINWIDGET_H
 
 #include "boardwidget.h"
+#include "matchprogresswidget.h"
 #include "scoreboardwidget.h"
 #include <QLabel>
 #include <QList>
@@ -34,12 +35,14 @@ class MainWidget : public QWidget
 
 private:
     BoardWidget* board;
+    MatchProgressWidget* matchprogress;
     ScoreBoardWidget* scoreboard;
 
 public:
     explicit MainWidget(QWidget *parent = 0);
 
     BoardWidget* getBoardWidget();
+    MatchProgressWidget* getMatchProgressWidget();
     ScoreBoardWidget* getScoreBoardWidget();
 
 signals:

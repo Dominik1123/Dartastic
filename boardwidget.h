@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include <shot.h>
 #include <QList>
 #include <QMouseEvent>
+#include <QString>
 #include <QWidget>
 
 class BoardWidget : public QWidget
@@ -43,6 +44,8 @@ private:
     static const double REF_R_OUTERDOUBLE_PX=292;
     static const double DELTA_PHI_DEG=18;
     static const double RAD_TO_DEG=57.29577951308232;
+
+    QString boardFilepath;
 
 public:
     explicit BoardWidget(QWidget *parent = 0);

@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,10 @@
 
 #include "match.h"
 
-Match::Match()
+Match::Match(int nLegsToWinSet, int nSetsToWinMatch)
 {
-
+    this->nLegsToWinSet = nLegsToWinSet;
+    this->nSetsToWinMatch = nSetsToWinMatch;
 }
 
 void Match::addPlayer(QString name)
@@ -43,4 +44,14 @@ QList<Player*> Match::getPlayers()
 Player* Match::playerAt(int i)
 {
     return players.at(i);
+}
+
+int Match::getNLegsToWinSet()
+{
+    return nLegsToWinSet;
+}
+
+int Match::getNSetsToWinMatch()
+{
+    return nSetsToWinMatch;
 }

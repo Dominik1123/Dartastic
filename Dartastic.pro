@@ -1,6 +1,6 @@
 /#######################################################################################
  #
- # This program solves the 2D puzzle "Lonpos 101".
+ # This program helps you to manage your scores at darts.
  # Copyright (C) 2016  Dominik Vilsmeier
  #
  # This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     move.cpp \
     leg.cpp \
     set.cpp \
-    match.cpp
+    match.cpp \
+    newmatchdialog.cpp \
+    matchprogresswidget.cpp
 
 HEADERS  += mainwindow.h \
     mainwidget.h \
@@ -53,4 +55,6 @@ HEADERS  += mainwindow.h \
     move.h \
     leg.h \
     set.h \
-    match.h
+    match.h \
+    newmatchdialog.h \
+    matchprogresswidget.h

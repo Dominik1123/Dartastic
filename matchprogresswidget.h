@@ -18,53 +18,32 @@
  *
  ***************************************************************************************/
 
-#ifndef SCOREBOARDWIDGET_H
-#define SCOREBOARDWIDGET_H
+#ifndef MATCHPROGRESSWIDGET_H
+#define MATCHPROGRESSWIDGET_H
 
-#include "match.h"
-#include "player.h"
-#include "shot.h"
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QKeyEvent>
-#include <QList>
-#include <QPushButton>
+#include <player.h>
 #include <QTableWidget>
-#include <QWidget>
 
-class ScoreBoardWidget : public QTableWidget
+class MatchProgressWidget : public QTableWidget
 {
     Q_OBJECT
 
 private:
-    static const int statsAverageLegRowCountFromBottom=3;
-    static const int statsAverageSetRowCountFromBottom=2;
-    static const int statsAverageMatchRowCountFromBottom=1;
-    static const int statsTotalRowCount=3;
-
-    static const int spacingAboveStats=1;
-
-    Match* match;
-
-    void insertRowIfNecessary(Player *player);
-    void resetTable(int nmoves);
-
-    void updateStats(int colIndex, Player* player);
+    int nSets;
+    int whichSet;
+    int nPlayers;
 
 public:
-    explicit ScoreBoardWidget(QWidget *parent = 0);
+    explicit MatchProgressWidget(QWidget *parent = 0);
 
-    void keyPressEvent(QKeyEvent* event);
+    void setNSets(int nSets);
 
 signals:
-    void legWon(Player* player);
-    void setWon(Player* player);
 
 public slots:
-    void newMatch(bool);
-    void newPlayer(bool);
-    void newShot(Shot* shot);
-    void cellClickedReaction(int i, int j, int, int);
+    void addPlayer(Player *player);
+    void legWon(Player* player);
+    void setWon(Player*player);
 };
 
-#endif // SCOREBOARDWIDGET_H
+#endif // MATCHPROGRESSWIDGET_H

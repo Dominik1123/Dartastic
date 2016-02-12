@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,12 +22,41 @@
 
 Player::Player(int id, QString name, QObject *parent) : QObject(parent), id(id), name(name)
 {
+    nLegWinsForCurrentSet=0;
+    nSetWins=0;
+
     newSet();
+}
+
+int Player::getId()
+{
+    return id;
+}
+
+QString Player::getName()
+{
+    return name;
 }
 
 double Player::averageLeg()
 {
     return sets.last()->currentLeg()->average();
+}
+
+double Player::averageSet()
+{
+    return sets.last()->average();
+}
+
+double Player::averageMatch()
+{
+    double sum=0;
+    int nmoves=0;
+    for(int i=0; i<sets.size(); ++i) {
+        sum += sets.at(i)->average()*sets.at(i)->getNMoves();
+        nmoves += sets.at(i)->getNMoves();
+    }
+    return sum/nmoves;
 }
 
 Move* Player::getCurrentMove()
@@ -48,4 +77,37 @@ int Player::getScore()
 void Player::newSet()
 {
     sets.append(new Set);
+}
+
+void Player::legWin(Player *player)
+{
+    if(player == this) {
+        nLegWinsForCurrentSet += 1;
+    }
+    sets.last()->newLeg();
+}
+
+void Player::setWin(Player *player)
+{
+    if(player == this) {
+        nSetWins += 1;
+    }
+    nLegWinsForCurrentSet = 0;
+    newSet();
+}
+
+int Player::getNLegWinsForCurrentSet()
+{
+    return nLegWinsForCurrentSet;
+}
+
+int Player::getNSetWins()
+{
+    return nSetWins;
+}
+
+
+Move* Player::takeLastMove()
+{
+    return sets.last()->currentLeg()->takeLastMove();
 }

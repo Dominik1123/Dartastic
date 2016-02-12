@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,6 +39,7 @@ public:
     int getNMoves();
     void newMove(Move* move);
     int getScore();
+    Move* takeLastMove();
 };
 
 #endif // LEG_H

@@ -18,28 +18,32 @@
  *
  ***************************************************************************************/
 
-#ifndef MOVE_H
-#define MOVE_H
+#ifndef NEWMATCHDIALOG_H
+#define NEWMATCHDIALOG_H
 
-#include <QList>
-#include <QString>
-#include <shot.h>
+#include <QDialog>
+#include <QLineEdit>
 
-class Move
+class NewMatchDialog : public QDialog
 {
+    Q_OBJECT
+
 private:
-    bool valid;
-    QList<Shot*> shots;
+    int nLegsToWinSet;
+    int nSetsToWinMatch;
+    QLineEdit* nLegsToWinSetInput;
+    QLineEdit* nSetsToWinMatchInput;
 
 public:
-    Move();
+    explicit NewMatchDialog(QWidget *parent = 0);
 
-    int getScore();
-    void newShot(Shot* shot);
-    void invalidate();
-    bool isComplete();
-    bool isValid();
-    QString print();
+    int getNLegsToWinSet();
+    int getNSetsToWinMatch();
+
+signals:
+
+public slots:
+    void oked();
 };
 
-#endif // MOVE_H
+#endif // NEWMATCHDIALOG_H

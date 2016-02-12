@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,26 @@
 Set::Set()
 {
     newLeg();
+}
+
+double Set::average()
+{
+    double sum=0;
+    int nmoves=0;
+    for(int i=0; i<legs.size(); ++i) {
+        sum += legs.at(i)->average()*legs.at(i)->getNMoves();
+        nmoves += legs.at(i)->getNMoves();
+    }
+    return sum/nmoves;
+}
+
+int Set::getNMoves()
+{
+    int nmoves = 0;
+    for(int i=0; i<legs.size(); ++i) {
+        nmoves += legs.at(i)->getNMoves();
+    }
+    return nmoves;
 }
 
 Leg* Set::currentLeg()

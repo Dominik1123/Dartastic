@@ -1,6 +1,6 @@
 /***************************************************************************************
  *
- * This program solves the 2D puzzle "Lonpos 101".
+ * This program helps you to manage your scores at darts.
  * Copyright (C) 2016  Dominik Vilsmeier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
  *
  ***************************************************************************************/
 
+#include <QDir>
 #include <QPainter>
 #include <QPixmap>
 #include <QSize>
@@ -31,6 +32,7 @@
 
 BoardWidget::BoardWidget(QWidget *parent) : QWidget(parent)
 {
+    this->boardFilepath = QDir("./../Dartastic/img/").filePath("dartboard2.png");
     setFixedSize(945, 945);
 }
 
@@ -42,7 +44,7 @@ void BoardWidget::paintEvent(QPaintEvent *e)
 {
     int w = qMin(size().width(), size().height());
     QPainter painter(this);
-    painter.drawPixmap(0, 0, QPixmap(".\\..\\Dartastic\\img\\dartboard2.png").scaled(QSize(w,w)));
+    painter.drawPixmap(0, 0, QPixmap(this->boardFilepath).scaled(QSize(w,w)));
     QWidget::paintEvent(e);
 }
 
