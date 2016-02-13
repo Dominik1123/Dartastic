@@ -48,6 +48,7 @@ void ScoreBoardWidget::newMatch(bool)
         }
         match = new Match(dialog.getNLegsToWinSet(), dialog.getNSetsToWinMatch(), dialog.getDoubleOut());
 
+        ((MainWidget*)parentWidget())->getMatchProgressWidget()->newMatch();
         ((MainWidget*)parentWidget())->getMatchProgressWidget()->setNSets(dialog.getNSetsToWinMatch());
 
         setRowCount(0);
@@ -85,6 +86,10 @@ void ScoreBoardWidget::newPlayer(bool)
             item = new QTableWidgetItem("average (match)");
             item->setFont(QFont("Times", 10, QFont::Bold));
             setItem(rowCount()-statsAverageMatchRowCountFromBottom, 0, item);
+
+            item = new QTableWidgetItem("double rate (match)");
+            item->setFont(QFont("Times", 10, QFont::Bold));
+            setItem(rowCount()-statsDoubleRateMatchRowCountFromBottom, 0, item);
         }
         QTableWidgetItem* iName = new QTableWidgetItem(name);
         iName->setFont(QFont("Times", 10, QFont::Bold));
@@ -104,6 +109,9 @@ void ScoreBoardWidget::newPlayer(bool)
 
         QTableWidgetItem* iAverageMatch = new QTableWidgetItem("");
         setItem(rowCount()-statsAverageMatchRowCountFromBottom, 2*nPlayers+1, iAverageMatch);
+
+        QTableWidgetItem* iDoubleRateMatch = new QTableWidgetItem("");
+        setItem(rowCount()-statsDoubleRateMatchRowCountFromBottom, 2*nPlayers+1, iDoubleRateMatch);
     }
 }
 
@@ -111,6 +119,14 @@ void ScoreBoardWidget::newShot(Shot *shot)
 {
     int colIndex = currentColumn();
     Player* player = match->playerAt(colIndex/2);
+    int previousScore = player->getScore();
+    bool wasDoubleAttempt;
+    if(previousScore <= 40 && previousScore%2 == 0) {
+        wasDoubleAttempt=true;
+    } else {
+        wasDoubleAttempt=false;
+    }
+
     Move* currentMove = player->getCurrentMove();
     currentMove->newShot(shot);
     int nMoves = player->getNMoves();
@@ -121,6 +137,9 @@ void ScoreBoardWidget::newShot(Shot *shot)
         currentMove->invalidate();
     }
     if(player->getScore() == 0 && !match->isValidFinalShot(shot)) {
+        currentMove->invalidate();
+    }
+    if(match->isDoubleOut() && player->getScore() == 1) {
         currentMove->invalidate();
     }
 
@@ -134,6 +153,11 @@ void ScoreBoardWidget::newShot(Shot *shot)
         setItem(nMoves+1, colIndex+1, iDetail);
 
         updateStats(colIndex, player);
+    }
+
+    if(wasDoubleAttempt) {
+        player->newDoubleAttempt(player->getScore() == 0);
+        updateStatsDoubleRate(colIndex, player);
     }
 
     if(player->getScore() == 0) {
@@ -181,6 +205,17 @@ void ScoreBoardWidget::updateStats(int colIndex, Player *player)
     item(rowCount()-statsAverageLegRowCountFromBottom, colIndex)->setText(avgLeg);
     item(rowCount()-statsAverageSetRowCountFromBottom, colIndex)->setText(avgSet);
     item(rowCount()-statsAverageMatchRowCountFromBottom, colIndex)->setText(avgMatch);
+}
+
+void ScoreBoardWidget::updateStatsDoubleRate(int colIndex, Player *player)
+{
+    QString dblRateMatch = QString::number(player->doubleRate(), 'f', 1);
+    if(dblRateMatch == "nan") {
+        dblRateMatch = "";
+    } else {
+        dblRateMatch += "%";
+    }
+    item(rowCount()-statsDoubleRateMatchRowCountFromBottom, colIndex)->setText(dblRateMatch);
 }
 
 void ScoreBoardWidget::cellClickedReaction(int i, int j, int, int)

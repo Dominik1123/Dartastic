@@ -37,6 +37,7 @@ private:
     QList<Set*> sets;
     int nLegWinsForCurrentSet;
     int nSetWins;
+    QList<bool> doubleAttempts;
 
 public:
     explicit Player(int id, QString name, QObject* parent = 0);
@@ -46,6 +47,7 @@ public:
     double averageLeg();
     double averageSet();
     double averageMatch();
+    double doubleRate();
     Move* getCurrentMove();
     int getNMoves();
     int getScore();
@@ -53,6 +55,7 @@ public:
     int getNLegWinsForCurrentSet();
     int getNSetWins();
     Move* takeLastMove();
+    void newDoubleAttempt(bool success);
 
 public slots:
     void legWin(Player* player);

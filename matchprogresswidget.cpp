@@ -26,18 +26,29 @@
 
 MatchProgressWidget::MatchProgressWidget(QWidget *parent) : QTableWidget(parent)
 {
-    nSets=0;
-    whichSet=1;
-    nPlayers=0;
+    init();
 
     horizontalHeader()->hide();
     verticalHeader()->hide();
+}
+
+void MatchProgressWidget::init()
+{
+    nSets=0;
+    whichSet=1;
+    nPlayers=0;
 }
 
 void MatchProgressWidget::setNSets(int nSets)
 {
     this->nSets = nSets;
     setColumnCount(nSets+1);
+}
+
+void MatchProgressWidget::newMatch()
+{
+    init();
+    setRowCount(0);
 }
 
 void MatchProgressWidget::addPlayer(Player* player)

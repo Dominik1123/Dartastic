@@ -33,6 +33,8 @@ private:
     int whichSet;
     int nPlayers;
 
+    void init();
+
 public:
     explicit MatchProgressWidget(QWidget *parent = 0);
 
@@ -41,6 +43,7 @@ public:
 signals:
 
 public slots:
+    void newMatch();
     void addPlayer(Player *player);
     void legWon(Player* player);
     void setWon(Player*player);

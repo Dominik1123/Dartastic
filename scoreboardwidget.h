@@ -37,10 +37,11 @@ class ScoreBoardWidget : public QTableWidget
     Q_OBJECT
 
 private:
-    static const int statsAverageLegRowCountFromBottom=3;
-    static const int statsAverageSetRowCountFromBottom=2;
-    static const int statsAverageMatchRowCountFromBottom=1;
-    static const int statsTotalRowCount=3;
+    static const int statsAverageLegRowCountFromBottom=4;
+    static const int statsAverageSetRowCountFromBottom=3;
+    static const int statsAverageMatchRowCountFromBottom=2;
+    static const int statsDoubleRateMatchRowCountFromBottom=1;
+    static const int statsTotalRowCount=4;
 
     static const int spacingAboveStats=1;
 
@@ -50,6 +51,7 @@ private:
     void resetTable(int nmoves);
 
     void updateStats(int colIndex, Player* player);
+    void updateStatsDoubleRate(int colIndex, Player* player);
 
 public:
     explicit ScoreBoardWidget(QWidget *parent = 0);

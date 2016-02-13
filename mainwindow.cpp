@@ -20,7 +20,9 @@
 
 #include "mainwindow.h"
 #include <QAction>
+#include <QDir>
 #include <QGridLayout>
+#include <QIcon>
 #include <QToolBar>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -30,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(w);
 
     QToolBar* toolbar = new QToolBar;
-    QAction* newMatch = new QAction(QIcon(".\\..\\Dartastic\\img\\new_orange_48x48.png"), "new match", this);
-    QAction* newPlayer = new QAction(QIcon(".\\..\\Dartastic\\img\\new_player_48x48.png"), "new player", this);
+    QAction* newMatch = new QAction(QIcon(QDir("./../Dartastic/img/").filePath("new_orange_48x48.png")), "new match", this);
+    QAction* newPlayer = new QAction(QIcon(QDir("./../Dartastic/img/").filePath("new_player_48x48.png")), "new player", this);
 
     connect(newMatch, SIGNAL(triggered(bool)), w->getScoreBoardWidget(), SLOT(newMatch(bool)));
     connect(newPlayer, SIGNAL(triggered(bool)), w->getScoreBoardWidget(), SLOT(newPlayer(bool)));

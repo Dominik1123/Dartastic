@@ -59,6 +59,15 @@ double Player::averageMatch()
     return sum/nmoves;
 }
 
+double Player::doubleRate()
+{
+    double sum=0;
+    for(int i=0; i<doubleAttempts.size(); ++i) {
+        sum += doubleAttempts.at(i);
+    }
+    return (sum/doubleAttempts.size())*100.;
+}
+
 Move* Player::getCurrentMove()
 {
     return sets.last()->currentLeg()->currentMove();
@@ -110,4 +119,9 @@ int Player::getNSetWins()
 Move* Player::takeLastMove()
 {
     return sets.last()->currentLeg()->takeLastMove();
+}
+
+void Player::newDoubleAttempt(bool success)
+{
+    doubleAttempts.append(success);
 }

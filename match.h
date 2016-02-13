@@ -42,6 +42,7 @@ public:
     Player* playerAt(int i);
     int getNLegsToWinSet();
     int getNSetsToWinMatch();
+    bool isDoubleOut();
     bool isValidFinalShot(Shot* shot);
 };
 

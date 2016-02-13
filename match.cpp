@@ -57,7 +57,12 @@ int Match::getNSetsToWinMatch()
     return nSetsToWinMatch;
 }
 
+bool Match::isDoubleOut()
+{
+    return doubleOut;
+}
+
 bool Match::isValidFinalShot(Shot *shot)
 {
-    return (doubleOut && shot->getDetail()[0] == '2') || (!doubleOut);
+    return (doubleOut && (shot->getDetail()[0] == '2' || shot->getScore() == 50)) || (!doubleOut);
 }
