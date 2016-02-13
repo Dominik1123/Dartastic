@@ -46,7 +46,7 @@ void ScoreBoardWidget::newMatch(bool)
         if(match != 0) {
             delete match;
         }
-        match = new Match(dialog.getNLegsToWinSet(), dialog.getNSetsToWinMatch());
+        match = new Match(dialog.getNLegsToWinSet(), dialog.getNSetsToWinMatch(), dialog.getDoubleOut());
 
         ((MainWidget*)parentWidget())->getMatchProgressWidget()->setNSets(dialog.getNSetsToWinMatch());
 
@@ -118,6 +118,9 @@ void ScoreBoardWidget::newShot(Shot *shot)
     item(nMoves, colIndex+1)->setText(currentMove->print());
 
     if(player->getScore() < 0) {
+        currentMove->invalidate();
+    }
+    if(player->getScore() == 0 && !match->isValidFinalShot(shot)) {
         currentMove->invalidate();
     }
 

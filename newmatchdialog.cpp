@@ -23,7 +23,6 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
 #include <QString>
 
 NewMatchDialog::NewMatchDialog(QWidget *parent) : QDialog(parent)
@@ -32,6 +31,8 @@ NewMatchDialog::NewMatchDialog(QWidget *parent) : QDialog(parent)
 
     nLegsToWinSetInput = new QLineEdit(this);
     nSetsToWinMatchInput = new QLineEdit(this);
+    doubleOutInput = new QCheckBox(this);
+    doubleOutInput->setChecked(true);
 
     nLegsToWinSetInput->setValidator(new QIntValidator(0, 100, this));
     nSetsToWinMatchInput->setValidator(new QIntValidator(0, 100, this));
@@ -49,7 +50,13 @@ NewMatchDialog::NewMatchDialog(QWidget *parent) : QDialog(parent)
     vLayout->addLayout(hLayout);
 
     hLayout = new QHBoxLayout;
-    QPushButton* okButton = new QPushButton("ok", this);
+    hLayout->addWidget(new QLabel("double out: ", this));
+    hLayout->addWidget(doubleOutInput);
+    vLayout->addLayout(hLayout);
+
+    hLayout = new QHBoxLayout;
+    okButton = new QPushButton("ok", this);
+    okButton->setEnabled(false);
     hLayout->addWidget(okButton);
     QPushButton* cancelButton = new QPushButton("cancel", this);
     hLayout->addWidget(cancelButton);
@@ -57,23 +64,30 @@ NewMatchDialog::NewMatchDialog(QWidget *parent) : QDialog(parent)
 
     setLayout(vLayout);
 
-    connect(okButton, SIGNAL(pressed()), this, SLOT(oked()));
+    connect(nLegsToWinSetInput, SIGNAL(textChanged(QString)), this, SLOT(toggleOkButton(QString)));
+    connect(nSetsToWinMatchInput, SIGNAL(textChanged(QString)), this, SLOT(toggleOkButton(QString)));
     connect(okButton, SIGNAL(pressed()), this, SLOT(accept()));
     connect(cancelButton, SIGNAL(pressed()), this, SLOT(reject()));
 }
 
 int NewMatchDialog::getNLegsToWinSet()
 {
-    return nLegsToWinSet;
+    return nLegsToWinSetInput->text().toInt();
 }
 
 int NewMatchDialog::getNSetsToWinMatch()
 {
-    return nSetsToWinMatch;
+    return nSetsToWinMatchInput->text().toInt();
 }
 
-void NewMatchDialog::oked()
+bool NewMatchDialog::getDoubleOut()
 {
-    nLegsToWinSet = nLegsToWinSetInput->text().toInt();
-    nSetsToWinMatch = nSetsToWinMatchInput->text().toInt();
+    return doubleOutInput->isChecked();
+}
+
+void NewMatchDialog::toggleOkButton(QString)
+{
+    if(!nLegsToWinSetInput->text().isEmpty() && !nSetsToWinMatchInput->text().isEmpty()) {
+        okButton->setEnabled(true);
+    }
 }

@@ -20,10 +20,11 @@
 
 #include "match.h"
 
-Match::Match(int nLegsToWinSet, int nSetsToWinMatch)
+Match::Match(int nLegsToWinSet, int nSetsToWinMatch, bool doubleOut)
 {
     this->nLegsToWinSet = nLegsToWinSet;
     this->nSetsToWinMatch = nSetsToWinMatch;
+    this->doubleOut = doubleOut;
 }
 
 void Match::addPlayer(QString name)
@@ -54,4 +55,9 @@ int Match::getNLegsToWinSet()
 int Match::getNSetsToWinMatch()
 {
     return nSetsToWinMatch;
+}
+
+bool Match::isValidFinalShot(Shot *shot)
+{
+    return (doubleOut && shot->getDetail()[0] == '2') || (!doubleOut);
 }

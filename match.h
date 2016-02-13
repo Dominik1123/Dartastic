@@ -22,6 +22,7 @@
 #define MATCH_H
 
 #include "player.h"
+#include "shot.h"
 #include <QList>
 
 class Match
@@ -30,9 +31,10 @@ private:
     QList<Player*> players;
     int nLegsToWinSet;
     int nSetsToWinMatch;
+    bool doubleOut;
 
 public:
-    Match(int nLegsToWinSet, int nSetsToWinMatch);
+    Match(int nLegsToWinSet, int nSetsToWinMatch, bool doubleOut);
 
     void addPlayer(QString name);
     int getNPlayers();
@@ -40,6 +42,7 @@ public:
     Player* playerAt(int i);
     int getNLegsToWinSet();
     int getNSetsToWinMatch();
+    bool isValidFinalShot(Shot* shot);
 };
 
 #endif // MATCH_H

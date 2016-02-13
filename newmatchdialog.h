@@ -21,29 +21,32 @@
 #ifndef NEWMATCHDIALOG_H
 #define NEWMATCHDIALOG_H
 
+#include <QCheckBox>
 #include <QDialog>
 #include <QLineEdit>
+#include <QPushButton>
 
 class NewMatchDialog : public QDialog
 {
     Q_OBJECT
 
 private:
-    int nLegsToWinSet;
-    int nSetsToWinMatch;
     QLineEdit* nLegsToWinSetInput;
     QLineEdit* nSetsToWinMatchInput;
+    QCheckBox* doubleOutInput;
+    QPushButton* okButton;
 
 public:
     explicit NewMatchDialog(QWidget *parent = 0);
 
     int getNLegsToWinSet();
     int getNSetsToWinMatch();
+    bool getDoubleOut();
 
 signals:
 
 public slots:
-    void oked();
+    void toggleOkButton(QString);
 };
 
 #endif // NEWMATCHDIALOG_H
